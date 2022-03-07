@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Noelle_Bot
 {
     internal class Program
     {
-        static void Main(string[] args) => new Program().RunBotAsync().GetAwaiter().GetResult(); 
+        static void Main(string[] args) => new Program().RunBotAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient _client;
         private CommandService _commands;
@@ -21,7 +18,10 @@ namespace Noelle_Bot
 
         public async Task RunBotAsync()
         {
-            _client = new DiscordSocketClient();
+            var config = new DiscordSocketConfig();
+            config.GatewayIntents = GatewayIntents.All;
+            config.AlwaysDownloadUsers = true;
+            _client = new DiscordSocketClient(config);
             _commands = new CommandService();
 
             _services = new ServiceCollection()
@@ -29,7 +29,7 @@ namespace Noelle_Bot
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-            string token = "OTQ4NjQyNDU0MDY2ODQzNjk4.Yh-yIQ.H4bYsDNCfdHR9fPNBC2jfT96PeA";
+            string token = "OTUwNDY4Mjg1MTcyOTY5NTAz.YiZWkg.KoS3i3EBPhXa6HdDLKnUGuowEpE";
 
             _client.Log += _client_Log;
 
@@ -59,8 +59,11 @@ namespace Noelle_Bot
         private async Task HandleCommandAsync(SocketMessage arg)
         {
             var Message = arg as SocketUserMessage;
+            if (Message == null) return;
             var context = new SocketCommandContext(_client, Message);
+            
             if (Message.Author.IsBot) return;
+            
 
             int argPos = 0;
             if (Message.HasStringPrefix(".", ref argPos))

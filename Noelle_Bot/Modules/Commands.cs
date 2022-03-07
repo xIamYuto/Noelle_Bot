@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
+using System;
+using System.Threading.Tasks;
 
 namespace Noelle_Bot.Modules
 {
@@ -18,17 +15,21 @@ namespace Noelle_Bot.Modules
         }
 
         [Command("ban")]
-        [RequireBotPermission(GuildPermission.BanMembers, ErrorMessage = "You dwont hwave twe pwermission! qwq")]
+        [RequireBotPermission(GuildPermission.BanMembers, ErrorMessage = "I dwont hwave twe pwermission! qwq")]
+        [RequireUserPermission(GuildPermission.BanMembers, ErrorMessage = "Ywu dwont hwave twe pwermission! qwq")]
         public async Task BanMember(IGuildUser user = null, [Remainder] string reason = null)
         {
+            Console.WriteLine(user.ToString());
             if (user == null)
             {
-                await ReplyAsync("Pweasy spwecify a wuser! OwO"); 
+                await ReplyAsync("Pweasy spwecify a wuser! OwO");
                 return;
             }
             if (reason == null) reason = "Not specified, you just suck! UwU";
 
-            await Context.Guild.AddBanAsync(user, 0, reason);
+            // await Context.Guild.AddBanAsync(user, 0, reason);
+            
+            await user.BanAsync(0, reason);
 
             var EmbedBuilder = new EmbedBuilder()
                 .WithDescription($":white_check_mark: {user.Mention} was bwanned UwU\n **Reason** {reason}")
