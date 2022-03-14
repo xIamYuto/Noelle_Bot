@@ -1,12 +1,12 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-// TODO: using Noelle_Bot.Services;
+using Noelle_Bot.Services;
 using System.Threading.Tasks;
 
 namespace Noelle_Bot.Modules
 {
-    public class AudioModule : ModuleBase<SocketCommandContext>
+    public class AudioCommands : ModuleBase<SocketCommandContext>
     {
         /* Get our AudioService from DI */
         public LavaLinkAudio AudioService { get; set; }

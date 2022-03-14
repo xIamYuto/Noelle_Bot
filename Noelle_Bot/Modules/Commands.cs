@@ -9,6 +9,12 @@ namespace Noelle_Bot.Modules
     public class Commands : ModuleBase<SocketCommandContext>
     {
 
+        [Command("donate")]
+        public async Task Donate()
+        {
+            await ReplyAsync("Twis is vewwy nwuice bot! Pwease dwonate if ywou want two bwuy me coffee uwu :coffee: \nhttps://www.paypal.me/esavcenko");
+        }
+
         [Command("ping")]
         public async Task Ping()
         {
