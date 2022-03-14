@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
 
@@ -12,6 +13,22 @@ namespace Noelle_Bot.Modules
         public async Task Ping()
         {
             await ReplyAsync("Pong! UwU");
+            await ReplyAsync($"Current Ping  {Context.Client.Latency}ms");
+        }
+        [Command("source")]
+        [Alias("sourcecode", "src")]
+        [Summary("I am mwade by Yuto OwO.")]
+        public async Task Source()
+    => await ReplyAsync($":heart: **{Context.Client.CurrentUser}** is based on this source code:\nhttps://github.com/xIamYuto/Noelle_Bot");
+
+        [Command("kick")]
+        [Summary("Kick a user from the server.")]
+        [RequireBotPermission(GuildPermission.KickMembers, ErrorMessage = "I dwont hwave twe pwermission! qwq")]
+        [RequireUserPermission(GuildPermission.KickMembers, ErrorMessage = "Ywu dwont hwave twe pwermission! qwq")]
+        public async Task Kick(SocketGuildUser targetUser, [Remainder] string reason = "No reason provided.")
+        {
+            await targetUser.KickAsync(reason);
+            await ReplyAsync($"**{targetUser}** hwas kicked OwO :wave:");
         }
 
         [Command("ban")]
