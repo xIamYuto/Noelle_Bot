@@ -20,3 +20,11 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - name: Determine version
+        run: echo "::set-env name=VERSION::$(git describe --tags --dirty)"
+      - name: Pack
+        run: dotnet pack --output ./artifacts --configuration Release -p:Version=$VERSION
+      - uses: actions/upload-artifact@v1
+        with:
+          name: artifacts
+          path: ./artifacts
