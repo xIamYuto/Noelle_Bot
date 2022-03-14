@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Pack
-        run: dotnet pack --output ./artifacts --configuration Release
+        run: dotnet publish --output ./artifacts --configuration Release
       - uses: actions/upload-artifact@v1
         with:
           name: artifacts
